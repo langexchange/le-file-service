@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.2" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LE.FileService.MinIO\LE.FileService.MinIO.csproj" />
+    <ProjectReference Include="..\LE.FileService.S3\LE.FileService.S3.csproj" />
+    <ProjectReference Include="..\LE.FileService.Shared\LE.FileService.Shared.csproj" />
+    <ProjectReference Include="..\LE.Library\LE.Library.csproj" />
+  </ItemGroup>
+
+</Project>
