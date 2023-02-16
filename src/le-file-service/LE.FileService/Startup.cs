@@ -29,29 +29,29 @@ namespace LE.FileService
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "LE.FileService", Version = "v1" });
             });
             services.AddScoped<IFileService, Services.FileService>();
-            //services.AddMinIOStorage(sp => new MinIOConfig
-            //{
-            //    AwsBucket = Env.S3_BUCKET_NAME,
-            //    AwsKeyId = Env.AWS_ACCESS_KEY_ID,
-            //    AwsSecretKey = Env.AWS_SECRET_ACCESS_KEY,
-            //    RegionEndpoint = Amazon.RegionEndpoint.APSoutheast1,
-            //    ACL = Amazon.S3.S3CannedACL.Private,
-            //    AmazonS3Config = new Amazon.S3.AmazonS3Config
-            //    {
-            //        AuthenticationRegion = Amazon.RegionEndpoint.USEast1.SystemName,// Should match the `MINIO_REGION`         
-            //                                                                        //AuthenticationRegion = "",
-            //        ServiceURL = Env.MINIO_HOST,
-            //        ForcePathStyle = true// MUST be true to work correctly with MinIO server}
-            //    }
-            //});
-            services.AddSS3torage(sp => new S3Config
+            services.AddMinIOStorage(sp => new MinIOConfig
             {
                 AwsBucket = Env.S3_BUCKET_NAME,
                 AwsKeyId = Env.AWS_ACCESS_KEY_ID,
                 AwsSecretKey = Env.AWS_SECRET_ACCESS_KEY,
                 RegionEndpoint = Amazon.RegionEndpoint.APSoutheast1,
                 ACL = Amazon.S3.S3CannedACL.Private,
+                AmazonS3Config = new Amazon.S3.AmazonS3Config
+                {
+                    AuthenticationRegion = Amazon.RegionEndpoint.USEast1.SystemName,// Should match the `MINIO_REGION`         
+                                                                                    //AuthenticationRegion = "",
+                    ServiceURL = Env.MINIO_HOST,
+                    ForcePathStyle = true// MUST be true to work correctly with MinIO server}
+                }
             });
+            //services.AddSS3torage(sp => new S3Config
+            //{
+            //    AwsBucket = Env.S3_BUCKET_NAME,
+            //    AwsKeyId = Env.AWS_ACCESS_KEY_ID,
+            //    AwsSecretKey = Env.AWS_SECRET_ACCESS_KEY,
+            //    RegionEndpoint = Amazon.RegionEndpoint.APSoutheast1,
+            //    ACL = Amazon.S3.S3CannedACL.Private,
+            //});
             services.AddHealthChecks();
             services.AddConsul();
         }

@@ -25,12 +25,14 @@
       "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "S3_BUCKET_NAME": "language-exchanged",
-        //"S3_BUCKET_NAME": "images",
-        //"AWS_ACCESS_KEY_ID": "05YmdejvfVXyWkjs",
-        //"AWS_SECRET_ACCESS_KEY": "LdqJZeGI4y9RhKU2MaZlTZ5fFxbdIdox", 
-        "AWS_ACCESS_KEY_ID": "",
-        "AWS_SECRET_ACCESS_KEY": "",
+        //set up for test local
+        "S3_BUCKET_NAME": "images",
+        "AWS_ACCESS_KEY_ID": "J4xYmxGktKuzArG6",
+        "AWS_SECRET_ACCESS_KEY": "hbIeercqPjNlcvOhmE5FC5IBuG5Y0yLT",
+        //end local
+        //"S3_BUCKET_NAME": "language-exchanged",
+        //"AWS_ACCESS_KEY_ID": "",
+        //"AWS_SECRET_ACCESS_KEY": "",
         "MINIO_HOST": "http://localhost:9000",
         "CONSUL_URL": "http://localhost:8500"
       }
