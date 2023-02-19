@@ -27,7 +27,7 @@ namespace LE.FileService.S3
                 Key = streamInfo.StreamId,
                 Expires = DateTime.UtcNow.AddMinutes(10),
                 Verb = HttpVerb.GET,
-                Protocol = Protocol.HTTP
+                Protocol = Protocol.HTTPS
             };
             return Task.FromResult(_amazonS3.GetPreSignedURL(request));
         }

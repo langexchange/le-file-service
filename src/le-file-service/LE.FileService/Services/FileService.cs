@@ -79,11 +79,14 @@ namespace LE.FileService.Services
             };
         }
 
-        public Task<FileStoreDto> UploadAsync(int id, IFormFile file, string root = null, CancellationToken cancellationToken = default)
+        public async Task<FileStoreDto> UploadAsync(int id, IFormFile file, string prefix, string root = null, CancellationToken cancellationToken = default)
         {
             var xPath = FileHelper.GenFullPath(id);
 
-            return UploadToPathAsync(file, xPath, root, cancellationToken);
+            var fileDto = await UploadToPathAsync(file, $"{prefix}/{xPath}", root, cancellationToken);
+            fileDto.FileType = prefix;
+
+            return fileDto;
         }
     }
 }

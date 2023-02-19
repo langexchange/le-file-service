@@ -45,15 +45,15 @@ namespace LE.FileService.Controllers
             return Ok(await Task.WhenAll(result));
         }
 
-        [HttpPost("{id}")]
-        public async Task<IActionResult> UploadAsync(int id, [FromForm] IFormFileCollection files, CancellationToken cancellationToken = default)
+        [HttpPost("{id}/types/{type}")]
+        public async Task<IActionResult> UploadAsync(int id, string type, [FromForm] IFormFileCollection files, CancellationToken cancellationToken = default)
         {
             if (files.Count == 0)
             {
                 files = HttpContext.Request.Form.Files;
             }
 
-            var fileStoreDtos = await Task.WhenAll(files.Select(file => _fileService.UploadAsync(id, file, cancellationToken: cancellationToken)));
+            var fileStoreDtos = await Task.WhenAll(files.Select(file => _fileService.UploadAsync(id, file, type, cancellationToken: cancellationToken)));
 
             return Ok(fileStoreDtos);
         }
