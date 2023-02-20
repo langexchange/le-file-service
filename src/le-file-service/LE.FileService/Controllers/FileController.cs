@@ -10,42 +10,35 @@ using System.Threading.Tasks;
 
 namespace LE.FileService.Controllers
 {
-    [Route("api/v1/files")]
+    [Route("api/files")]
     [ApiController]
     public class FileController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
-        private readonly ILogger<FileController> _logger;
         private readonly IFileService _fileService;
 
-        public FileController(ILogger<FileController> logger, IFileService fileService)
+        public FileController(IFileService fileService)
         {
-            _logger = logger;
             _fileService = fileService;
         }
 
-        [HttpGet("url")]
-        public async Task<IActionResult> GetDownloadUrlFromStreamIdAsync([FromQuery] string[] streamId, CancellationToken cancellationToken = default)
-        {
-            if (!(streamId?.Any() ?? false))
-                return BadRequest();
+        //[HttpGet("url")]
+        //public async Task<IActionResult> GetDownloadUrlFromStreamIdAsync([FromQuery] string[] streamId, CancellationToken cancellationToken = default)
+        //{
+        //    if (!(streamId?.Any() ?? false))
+        //        return BadRequest();
 
-            var result = streamId.Select(async id =>
-            {
-                var url = await _fileService.GetDownloadUrlFromStreamIdAsync(id, cancellationToken: cancellationToken);
+        //    var result = streamId.Select(async id =>
+        //    {
+        //        var url = await _fileService.GetDownloadUrlFromStreamIdAsync(id, cancellationToken: cancellationToken);
 
-                return KeyValuePair.Create(id, url);
+        //        return KeyValuePair.Create(id, url);
 
-            });
+        //    });
 
-            return Ok(await Task.WhenAll(result));
-        }
+        //    return Ok(await Task.WhenAll(result));
+        //}
 
-        [HttpPost("{id}/types/{type}")]
+        [HttpPost("users/{id}/types/{type}")]
         public async Task<IActionResult> UploadAsync(int id, string type, [FromForm] IFormFileCollection files, CancellationToken cancellationToken = default)
         {
             if (files.Count == 0)
