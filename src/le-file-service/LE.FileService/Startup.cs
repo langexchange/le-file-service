@@ -44,6 +44,7 @@ namespace LE.FileService
             //        ForcePathStyle = true// MUST be true to work correctly with MinIO server}
             //    }
             //});
+
             services.AddSS3torage(sp => new S3Config
             {
                 AwsBucket = Env.S3_BUCKET_NAME,
