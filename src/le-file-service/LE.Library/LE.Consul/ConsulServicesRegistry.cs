@@ -70,32 +70,81 @@ namespace LE.Library.LE.Consul
                        StringComparison.InvariantCultureIgnoreCase))
                    .Select(x => x.Value).ToList() ?? new List<AgentService>();
 
+        //public void SetupConsul(ConsulOptions consulOptions, IApplicationBuilder app)
+        //{
+        //    var address = consulOptions.Address;
+        //    if (string.IsNullOrWhiteSpace(address))
+        //    {
+        //        var ip = ConsulExtensions.GetPrivateAddress();
+        //        //var ip = "localhost";
+        //        //if (ip == null)
+        //        //    throw new ArgumentException($"{ip} Consul Client address can not be empty.",
+        //        //    nameof(consulOptions.PingEndpoint));
+        //        //address = ip.ToString();
+
+        //        // Get server IP address
+        //        var features = app.Properties["server.Features"] as FeatureCollection;
+        //        var addresses = features.Get<IServerAddressesFeature>();
+        //        address = addresses.Addresses.First();
+        //    }
+        //    var uri = new Uri(address);
+        //    _registration = new AgentServiceRegistration
+        //    {
+        //        Name = consulOptions.Service,
+        //        ID = $"{consulOptions.Service}:{Guid.NewGuid().ToString("n")}",
+        //        //Address = address,
+        //        //Port = consulOptions.Port,
+        //        Address = $"{uri.Host}",
+        //        Port = uri.Port,
+        //    };
+        //    if (consulOptions.PingEnabled)
+        //    {
+        //        var pingEndpoint = consulOptions.PingEndpoint;
+        //        var pingInterval = consulOptions.PingInterval <= 0 ? 5 : consulOptions.PingInterval;
+        //        var removeAfterInterval =
+        //            consulOptions.RemoveAfterInterval <= 0 ? 10 : consulOptions.RemoveAfterInterval;
+        //        //var scheme = address.StartsWith("http", StringComparison.InvariantCultureIgnoreCase) ? string.Empty : "http://";
+        //        var httpCheck = new AgentServiceCheck
+        //        {
+        //            Interval = TimeSpan.FromSeconds(pingInterval),
+        //            DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(removeAfterInterval),
+        //            HTTP = $"{uri.Scheme}://{uri.Host}{(_registration.Port > 0 ? $":{_registration.Port}" : string.Empty)}/{pingEndpoint}"
+        //        };
+        //        //_registration.Checks = new[] { httpCheck };
+
+        //        if (string.IsNullOrWhiteSpace(pingEndpoint) || pingEndpoint.ToLower() == "ping")
+        //        {
+        //            pingEndpoint = "ping";
+        //            app.Use(async (ctx, next) =>
+        //            {
+        //                if (ctx.Request.Path.Equals(new PathString($"/{pingEndpoint}")))
+        //                {
+        //                    ctx.Response.StatusCode = StatusCodes.Status200OK;
+        //                    await ctx.Response.WriteAsync("ok");
+        //                    return;
+        //                }
+        //                await next.Invoke();
+        //            });
+        //        }
+        //    }
+        //}
         public void SetupConsul(ConsulOptions consulOptions, IApplicationBuilder app)
         {
             var address = consulOptions.Address;
             if (string.IsNullOrWhiteSpace(address))
             {
                 var ip = ConsulExtensions.GetPrivateAddress();
-                //var ip = "localhost";
-                //if (ip == null)
-                //    throw new ArgumentException($"{ip} Consul Client address can not be empty.",
-                //    nameof(consulOptions.PingEndpoint));
-                //address = ip.ToString();
-
-                // Get server IP address
-                var features = app.Properties["server.Features"] as FeatureCollection;
-                var addresses = features.Get<IServerAddressesFeature>();
-                address = addresses.Addresses.First();
+                if (ip == null)
+                    throw new ArgumentException($"{ip} Consul Client address can not be empty.",
+                    nameof(consulOptions.PingEndpoint));
+                address = ip.ToString();
             }
-            var uri = new Uri(address);
             _registration = new AgentServiceRegistration
             {
                 Name = consulOptions.Service,
                 ID = $"{consulOptions.Service}:{Guid.NewGuid().ToString("n")}",
-                //Address = address,
-                //Port = consulOptions.Port,
-                Address = $"{uri.Host}",
-                Port = uri.Port,
+                Address = address,
+                Port = consulOptions.Port
             };
             if (consulOptions.PingEnabled)
             {
@@ -103,12 +152,12 @@ namespace LE.Library.LE.Consul
                 var pingInterval = consulOptions.PingInterval <= 0 ? 5 : consulOptions.PingInterval;
                 var removeAfterInterval =
                     consulOptions.RemoveAfterInterval <= 0 ? 10 : consulOptions.RemoveAfterInterval;
-                //var scheme = address.StartsWith("http", StringComparison.InvariantCultureIgnoreCase) ? string.Empty : "http://";
+                var scheme = address.StartsWith("http", StringComparison.InvariantCultureIgnoreCase) ? string.Empty : "http://";
                 var httpCheck = new AgentServiceCheck
                 {
                     Interval = TimeSpan.FromSeconds(pingInterval),
                     DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(removeAfterInterval),
-                    HTTP = $"{uri.Scheme}://{uri.Host}{(_registration.Port > 0 ? $":{_registration.Port}" : string.Empty)}/{pingEndpoint}"
+                    HTTP = $"{scheme}://{address}{(_registration.Port > 0 ? $":{_registration.Port}" : string.Empty)}/{pingEndpoint}"
                 };
                 //_registration.Checks = new[] { httpCheck };
 
