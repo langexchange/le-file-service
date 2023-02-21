@@ -181,8 +181,9 @@ namespace LE.Library.LE.Consul
                         await _client.Agent.ServiceRegister(_registration, cancellationToken);
                     }
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    _logger.LogError("Faile register service, message: {0}", e.Message);
                     _listServices = new Dictionary<string, AgentService>();
                 }
                 await Task.Delay(TimeSpan.FromSeconds(60));
