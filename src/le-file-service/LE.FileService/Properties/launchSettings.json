@@ -22,19 +22,20 @@
       "dotnetRunMessages": "true",
       "launchBrowser": true,
       "launchUrl": "swagger",
-      "applicationUrl": "http://localhost:5000",
+      "applicationUrl": "http://localhost:5003",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        //set up for test local
-        "S3_BUCKET_NAME": "images",
-        "AWS_ACCESS_KEY_ID": "J4xYmxGktKuzArG6",
-        "AWS_SECRET_ACCESS_KEY": "hbIeercqPjNlcvOhmE5FC5IBuG5Y0yLT",
+        ////set up for test local
+        //"S3_BUCKET_NAME": "images",
+        //"AWS_ACCESS_KEY_ID": "J4xYmxGktKuzArG6",
+        //"AWS_SECRET_ACCESS_KEY": "hbIeercqPjNlcvOhmE5FC5IBuG5Y0yLT",
         //end local
-        //"S3_BUCKET_NAME": "language-exchanged",
-        //"AWS_ACCESS_KEY_ID": "",
-        //"AWS_SECRET_ACCESS_KEY": "",
+        "S3_BUCKET_NAME": "language-exchanged",
+        "AWS_ACCESS_KEY_ID": "AKIA5RKKGIJLXKDTJLC4",
+        "AWS_SECRET_ACCESS_KEY": "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",
         "MINIO_HOST": "http://localhost:9000",
-        "CONSUL_URL": "http://localhost:8500"
+        //"CONSUL_URL": "http://localhost:8500"
+        "CONSUL_URL": "http://host.docker.internal:8500"
       }
     }
   }
