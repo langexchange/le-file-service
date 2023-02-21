@@ -78,6 +78,7 @@ namespace LE.Library.LE.Consul
                 var features = app.Properties["server.Features"] as FeatureCollection;
                 var addresses = features.Get<IServerAddressesFeature>();
                 address = addresses.Addresses.First();
+                _logger.LogError("SetupConsul, address: {0}", address);
             }
             var uri = new Uri(address);
             _registration = new AgentServiceRegistration
