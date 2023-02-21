@@ -173,6 +173,7 @@ namespace LE.Library.LE.Consul
             {
                 try
                 {
+                    _logger.LogError("Start register service, message");
                     var list = await _client.Agent.Services(cancellationToken);
                     _listServices = list.Response;
                     if (!list.Response.ContainsKey(_registration.Name) || !list.Response.Values.Any(x => x.ID == _registration.ID))
