@@ -65,8 +65,8 @@ namespace LE.Library.LE.Consul
             try
             {
                 var consulOptions = scope.ServiceProvider.GetService<IOptions<ConsulOptions>>();
-                //if (consulOptions?.Value != null)
-                //{
+                if (consulOptions?.Value != null)
+                {
                     var consulServicesRegistry = scope.ServiceProvider.GetService<IConsulServicesRegistry>();
                     var lifeTime = scope.ServiceProvider.GetService<IHostApplicationLifetime>();
                     consulServicesRegistry.SetupConsul(consulOptions.Value, app);
@@ -77,7 +77,7 @@ namespace LE.Library.LE.Consul
                         tokenResource.Cancel();
                         consulServicesRegistry.StopAsync(tokenResource.Token);
                     });
-                //}
+                }
             }
             catch (Exception)
             {
