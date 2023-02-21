@@ -125,8 +125,7 @@ namespace LE.Library.LE.Consul
             var address = consulOptions.Address;
             if (string.IsNullOrWhiteSpace(address))
             {
-                //var ip = ConsulExtensions.GetPrivateAddress();
-                var ip = "le-file-service";
+                var ip = ConsulExtensions.GetPrivateAddress();
                 if (ip == null)
                     throw new ArgumentException($"{ip} Consul Client address can not be empty.",
                     nameof(consulOptions.PingEndpoint));
@@ -152,7 +151,7 @@ namespace LE.Library.LE.Consul
                     DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(removeAfterInterval),
                     HTTP = $"{scheme}{address}{(_registration.Port > 0 ? $":{_registration.Port}" : string.Empty)}/{pingEndpoint}"
                 };
-                //_registration.Checks = new[] { httpCheck };
+                _registration.Checks = new[] { httpCheck };
 
                 if (string.IsNullOrWhiteSpace(pingEndpoint) || pingEndpoint.ToLower() == "ping")
                 {
