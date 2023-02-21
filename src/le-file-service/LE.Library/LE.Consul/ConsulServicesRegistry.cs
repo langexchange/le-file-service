@@ -72,14 +72,15 @@ namespace LE.Library.LE.Consul
 
         public void SetupConsul(ConsulOptions consulOptions, IApplicationBuilder app)
         {
-            var address = consulOptions.Address;
-            if (string.IsNullOrWhiteSpace(address))
-            {
-                var features = app.Properties["server.Features"] as FeatureCollection;
-                var addresses = features.Get<IServerAddressesFeature>();
-                address = addresses.Addresses.First();
-                _logger.LogError("SetupConsul, address: {0}", address);
-            }
+            var address = "http://localhost:5000";
+            //var address = consulOptions.Address;
+            //if (string.IsNullOrWhiteSpace(address))
+            //{
+            //    var features = app.Properties["server.Features"] as FeatureCollection;
+            //    var addresses = features.Get<IServerAddressesFeature>();
+            //    address = addresses.Addresses.First();
+            //    _logger.LogError("SetupConsul, address: {0}", address);
+            //}
             var uri = new Uri(address);
             _logger.LogError("SetupConsul, uri: {0}:{1}", uri.Host,uri.Port);
             _registration = new AgentServiceRegistration
