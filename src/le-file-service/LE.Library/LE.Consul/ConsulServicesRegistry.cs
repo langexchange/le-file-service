@@ -125,7 +125,8 @@ namespace LE.Library.LE.Consul
             var address = consulOptions.Address;
             if (string.IsNullOrWhiteSpace(address))
             {
-                var ip = ConsulExtensions.GetPrivateAddress();
+                //var ip = ConsulExtensions.GetPrivateAddress();
+                var ip = "le-file-service";
                 if (ip == null)
                     throw new ArgumentException($"{ip} Consul Client address can not be empty.",
                     nameof(consulOptions.PingEndpoint));
