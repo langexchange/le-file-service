@@ -81,6 +81,7 @@ namespace LE.Library.LE.Consul
                 _logger.LogError("SetupConsul, address: {0}", address);
             }
             var uri = new Uri(address);
+            _logger.LogError("SetupConsul, uri: {0}:{1}", uri.Host,uri.Port);
             _registration = new AgentServiceRegistration
             {
                 Name = consulOptions.Service,
@@ -100,6 +101,7 @@ namespace LE.Library.LE.Consul
                     DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(removeAfterInterval),
                     HTTP = $"{uri.Scheme}://{uri.Host}{(_registration.Port > 0 ? $":{_registration.Port}" : string.Empty)}/{pingEndpoint}"
                 };
+                _logger.LogError("SetupConsul,ping {0}", httpCheck.HTTP);
                 //_registration.Checks = new[] { httpCheck };
 
                 if (string.IsNullOrWhiteSpace(pingEndpoint) || pingEndpoint.ToLower() == "ping")
