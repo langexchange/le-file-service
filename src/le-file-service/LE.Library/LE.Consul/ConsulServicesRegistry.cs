@@ -131,11 +131,15 @@ namespace LE.Library.LE.Consul
                     nameof(consulOptions.PingEndpoint));
                 address = ip.ToString();
             }
+
+            var uri = new Uri(consulOptions.Address);
             _registration = new AgentServiceRegistration
             {
                 Name = consulOptions.Service,
                 ID = $"{consulOptions.Service}:{Guid.NewGuid().ToString("n")}",
-                Address = address,
+                //Address = address,
+                //Port = consulOptions.Port
+                Address = uri.Host,
                 Port = consulOptions.Port
             };
             if (consulOptions.PingEnabled)
@@ -149,7 +153,8 @@ namespace LE.Library.LE.Consul
                 {
                     Interval = TimeSpan.FromSeconds(pingInterval),
                     DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(removeAfterInterval),
-                    HTTP = $"{scheme}{address}{(_registration.Port > 0 ? $":{_registration.Port}" : string.Empty)}/{pingEndpoint}"
+                    //HTTP = $"{scheme}{address}{(_registration.Port > 0 ? $":{_registration.Port}" : string.Empty)}/{pingEndpoint}"
+                    HTTP = $"{scheme}{uri.Host}{(_registration.Port > 0 ? $":{_registration.Port}" : string.Empty)}/{pingEndpoint}"
                 };
                 _registration.Checks = new[] { httpCheck };
 
