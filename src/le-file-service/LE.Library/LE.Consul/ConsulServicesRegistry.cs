@@ -154,7 +154,7 @@ namespace LE.Library.LE.Consul
                     Interval = TimeSpan.FromSeconds(pingInterval),
                     DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(removeAfterInterval),
                     //HTTP = $"{scheme}{address}{(_registration.Port > 0 ? $":{_registration.Port}" : string.Empty)}/{pingEndpoint}"
-                    HTTP = $"{scheme}{uri.Host}{(_registration.Port > 0 ? $":{_registration.Port}" : string.Empty)}/{pingEndpoint}"
+                    HTTP = $"http://{uri.Host}{(_registration.Port > 0 ? $":{_registration.Port}" : string.Empty)}/{pingEndpoint}"
                 };
                 _registration.Checks = new[] { httpCheck };
 
