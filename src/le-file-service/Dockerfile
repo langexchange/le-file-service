@@ -12,7 +12,6 @@ COPY ["LE.FileService/LE.FileService.csproj", "LE.FileService/"]
 COPY ["LE.FileService.S3/LE.FileService.S3.csproj", "LE.FileService.S3/"]
 COPY ["LE.FileService.MinIO/LE.FileService.MinIO.csproj", "LE.FileService.MinIO/"]
 COPY ["LE.FileService.Shared/LE.FileService.Shared.csproj", "LE.FileService.Shared/"]
-COPY ["LE.Library/LE.Library.csproj", "LE.Library/"]
 RUN dotnet restore "LE.FileService/LE.FileService.csproj" --configfile ./LE.FileService/NuGet.config
 COPY ./ ./
 WORKDIR "/src/LE.FileService"
