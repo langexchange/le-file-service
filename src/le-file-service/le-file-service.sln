@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LE.FileService.S3", "LE.Fil
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LE.FileService.MinIO", "LE.FileService.MinIO\LE.FileService.MinIO.csproj", "{67EC386B-D1AC-4663-8CA2-07F3F561F88B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LE.Library", "LE.Library\LE.Library.csproj", "{DB8DCCDE-BC1B-41D7-A554-B2F589963915}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,10 +33,6 @@ Global
 		{67EC386B-D1AC-4663-8CA2-07F3F561F88B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67EC386B-D1AC-4663-8CA2-07F3F561F88B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{67EC386B-D1AC-4663-8CA2-07F3F561F88B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DB8DCCDE-BC1B-41D7-A554-B2F589963915}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DB8DCCDE-BC1B-41D7-A554-B2F589963915}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DB8DCCDE-BC1B-41D7-A554-B2F589963915}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DB8DCCDE-BC1B-41D7-A554-B2F589963915}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
