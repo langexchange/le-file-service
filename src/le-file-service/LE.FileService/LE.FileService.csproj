@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="LE.Library.Consul" Version="0.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.2" />
@@ -15,7 +16,6 @@
     <ProjectReference Include="..\LE.FileService.MinIO\LE.FileService.MinIO.csproj" />
     <ProjectReference Include="..\LE.FileService.S3\LE.FileService.S3.csproj" />
     <ProjectReference Include="..\LE.FileService.Shared\LE.FileService.Shared.csproj" />
-    <ProjectReference Include="..\LE.Library\LE.Library.csproj" />
   </ItemGroup>
 
 </Project>
