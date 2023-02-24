@@ -33,20 +33,12 @@ namespace LE.Library.LE.Consul
             var options = new ConsulOptions();
             configuration.GetSection(ConsulSectionName).Bind(options);
             options.Url = Environment.GetEnvironmentVariable("CONSUL_URL");
-            //services.Configure<ConsulOptions>(configuration.GetSection(ConsulSectionName));
             services.Configure<ConsulOptions>(op =>
             {
                 configuration.GetSection(ConsulSectionName).Bind(op);
                 op.Url = Environment.GetEnvironmentVariable("CONSUL_URL");
             });
             services.AddSingleton<IConsulServicesRegistry, ConsulServicesRegistry>();
-            services.AddTransient<ConsulServiceDiscoveryMessageHandler>();
-            services.AddHttpClient<IConsulHttpClient, ConsulHttpClient>()
-                .AddHttpMessageHandler<ConsulServiceDiscoveryMessageHandler>();
-                //.AddTransientHttpErrorPolicy(policyBuilder => policyBuilder.CircuitBreakerAsync(
-                //    handledEventsAllowedBeforeBreaking: 5,
-                //    durationOfBreak: TimeSpan.FromMinutes(1)
-                //));
 
             services.AddSingleton<IConsulClient>(c => new ConsulClient(cfg =>
             {

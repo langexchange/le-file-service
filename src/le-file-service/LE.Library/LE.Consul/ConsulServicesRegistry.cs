@@ -70,56 +70,6 @@ namespace LE.Library.LE.Consul
                        StringComparison.InvariantCultureIgnoreCase))
                    .Select(x => x.Value).ToList() ?? new List<AgentService>();
 
-        //public void SetupConsul(ConsulOptions consulOptions, IApplicationBuilder app)
-        //{
-        //    var address = consulOptions.Address;
-        //    if (string.IsNullOrWhiteSpace(address))
-        //    {
-        //        var features = app.Properties["server.Features"] as FeatureCollection;
-        //        var addresses = features.Get<IServerAddressesFeature>();
-        //        address = addresses.Addresses.First();
-        //        _logger.LogError("SetupConsul, address: {0}", address);
-        //    }
-        //    var uri = new Uri(address);
-        //    _logger.LogError("SetupConsul, uri: {0}:{1}", uri.Host,uri.Port);
-        //    _registration = new AgentServiceRegistration
-        //    {
-        //        Name = consulOptions.Service,
-        //        ID = $"{consulOptions.Service}:{Guid.NewGuid().ToString("n")}",
-        //        Address = $"{uri.Host}",
-        //        Port = uri.Port,
-        //    };
-        //    if (consulOptions.PingEnabled)
-        //    {
-        //        var pingEndpoint = consulOptions.PingEndpoint;
-        //        var pingInterval = consulOptions.PingInterval <= 0 ? 5 : consulOptions.PingInterval;
-        //        var removeAfterInterval =
-        //            consulOptions.RemoveAfterInterval <= 0 ? 10 : consulOptions.RemoveAfterInterval;
-        //        var httpCheck = new AgentServiceCheck
-        //        {
-        //            Interval = TimeSpan.FromSeconds(pingInterval),
-        //            DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(removeAfterInterval),
-        //            HTTP = $"{uri.Scheme}://{uri.Host}{(_registration.Port > 0 ? $":{_registration.Port}" : string.Empty)}/{pingEndpoint}"
-        //        };
-        //        _logger.LogError("SetupConsul,ping {0}", httpCheck.HTTP);
-        //        //_registration.Checks = new[] { httpCheck };
-
-        //        if (string.IsNullOrWhiteSpace(pingEndpoint) || pingEndpoint.ToLower() == "ping")
-        //        {
-        //            pingEndpoint = "ping";
-        //            app.Use(async (ctx, next) =>
-        //            {
-        //                if (ctx.Request.Path.Equals(new PathString($"/{pingEndpoint}")))
-        //                {
-        //                    ctx.Response.StatusCode = StatusCodes.Status200OK;
-        //                    await ctx.Response.WriteAsync("ok");
-        //                    return;
-        //                }
-        //                await next.Invoke();
-        //            });
-        //        }
-        //    }
-        //}
         public void SetupConsul(ConsulOptions consulOptions, IApplicationBuilder app)
         {
             var address = consulOptions.Address;
@@ -137,8 +87,6 @@ namespace LE.Library.LE.Consul
             {
                 Name = consulOptions.Service,
                 ID = $"{consulOptions.Service}:{Guid.NewGuid().ToString("n")}",
-                //Address = address,
-                //Port = consulOptions.Port
                 Address = uri.Host,
                 Port = consulOptions.Port
             };
@@ -153,7 +101,6 @@ namespace LE.Library.LE.Consul
                 {
                     Interval = TimeSpan.FromSeconds(pingInterval),
                     DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(removeAfterInterval),
-                    //HTTP = $"{scheme}{address}{(_registration.Port > 0 ? $":{_registration.Port}" : string.Empty)}/{pingEndpoint}"
                     HTTP = $"http://{uri.Host}{(_registration.Port > 0 ? $":{_registration.Port}" : string.Empty)}/{pingEndpoint}"
                 };
                 _registration.Checks = new[] { httpCheck };
@@ -186,7 +133,7 @@ namespace LE.Library.LE.Consul
                     _listServices = list.Response;
                     if (!list.Response.ContainsKey(_registration.Name) || !list.Response.Values.Any(x => x.ID == _registration.ID))
                     {
-                        _logger.LogInformation("register service name: {0}, address: {1}, port: {2}", _registration.Name, _registration.Address, _registration.Port);
+                        _logger.LogInformation("Register service name: {0}, address: {1}, port: {2}", _registration.Name, _registration.Address, _registration.Port);
                         await _client.Agent.ServiceRegister(_registration, cancellationToken);
                     }
                 }
