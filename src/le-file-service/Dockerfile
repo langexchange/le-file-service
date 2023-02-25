@@ -10,12 +10,14 @@ ARG NUGET_GITHUB_PASSWORD= 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
 WORKDIR /src
 COPY ["LE.FileService/NuGet.config", "LE.FileService/"]
 RUN sed -i "s|</configuration>|<packageSourceCredentials><github><add key=\\\"Username\\\" value=\\\"thuongnguyen1508\\\" /><add key=\\\"ClearTextPassword\\\" value=\\\"${NUGET_GITHUB_PASSWORD}\\\" /></github></packageSourceCredentials></configuration>|" "LE.FileService/NuGet.config"
-COPY ["LE.FileService/NuGet.config", "LE.FileService/"]
+RUN cat "./LE.FileService/NuGet.config"
+# COPY ["LE.FileService/NuGet.config", "LE.FileService/"]
 COPY ["LE.FileService/LE.FileService.csproj", "LE.FileService/"]
 COPY ["LE.FileService.S3/LE.FileService.S3.csproj", "LE.FileService.S3/"]
 COPY ["LE.FileService.MinIO/LE.FileService.MinIO.csproj", "LE.FileService.MinIO/"]
 COPY ["LE.FileService.Shared/LE.FileService.Shared.csproj", "LE.FileService.Shared/"]
 RUN dotnet restore "LE.FileService/LE.FileService.csproj" --configfile ./LE.FileService/NuGet.config
+RUN cat "./LE.FileService/NuGet.config"
 COPY ./ ./
 WORKDIR "/src/LE.FileService"
 RUN dotnet build "LE.FileService.csproj" -c Release -o /app/build
