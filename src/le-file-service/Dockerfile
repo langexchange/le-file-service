@@ -8,7 +8,7 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 ARG NUGET_GITHUB_PASSWORD
 WORKDIR /src
-RUN sed -i "s|</configuration>|<packageSourceCredentials><github><add key=\\\"Username\\\" value=\\\"thuongnguyen1508\\\" /><add key=\\\"ClearTextPassword\\\" value=\\\"${NUGET_GITHUB_PASSWORD}\\\" /></github></packageSourceCredentials></configuration>|" "LE.FileService/NuGet.config"
+RUN sed -i "s|</configuration>|<packageSourceCredentials><github><add key=\\\"Username\\\" value=\\\"thuongnguyen1508\\\" /><add key=\\\"ClearTextPassword\\\" value=\\\"${NUGET_GITHUB_PASSWORD}\\\" /></github></packageSourceCredentials></configuration>|" LE.FileService/NuGet.config
 COPY ["LE.FileService/NuGet.config", "LE.FileService/"]
 COPY ["LE.FileService/LE.FileService.csproj", "LE.FileService/"]
 COPY ["LE.FileService.S3/LE.FileService.S3.csproj", "LE.FileService.S3/"]
