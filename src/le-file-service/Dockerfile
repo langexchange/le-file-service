@@ -6,7 +6,7 @@ EXPOSE 80
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
-ARG NUGET_GITHUB_PASSWORD= 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
+ARG NUGET_GITHUB_PASSWORD
 WORKDIR /src
 COPY ["LE.FileService/NuGet.config", "LE.FileService/"]
 RUN sed -i "s|</configuration>|<packageSourceCredentials><github><add key=\\\"Username\\\" value=\\\"thuongnguyen1508\\\" /><add key=\\\"ClearTextPassword\\\" value=\\\"${NUGET_GITHUB_PASSWORD}\\\" /></github></packageSourceCredentials></configuration>|" "LE.FileService/NuGet.config"
