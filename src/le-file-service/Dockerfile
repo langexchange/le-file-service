@@ -6,6 +6,8 @@ EXPOSE 80
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+ARG NUGET_GITHUB_USERNAME
+ARG NUGET_GITHUB_PASSWORD
 WORKDIR /src
 COPY ["LE.FileService/NuGet.config", "LE.FileService/"]
 COPY ["LE.FileService/LE.FileService.csproj", "LE.FileService/"]

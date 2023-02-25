@@ -32,6 +32,9 @@ jobs:
           ## file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/le-file-service:latest
+          args: |
+            --build-arg NUGET_GITHUB_USERNAME=${{ secrets.NUGET_GITHUB_USERNAME }}
+            --build-arg NUGET_GITHUB_PASSWORD=${{ secrets.NUGET_GITHUB_PASSWORD }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
       - name: Move cache
