@@ -1,7 +1,6 @@
-using LE.FileService.MinIO;
 using LE.FileService.S3;
 using LE.FileService.Services;
-using LE.Library.LE.Consul;
+using LE.Library.Consul;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -28,6 +27,9 @@ namespace LE.FileService
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "LE.FileService", Version = "v1" });
             });
+
+            services.AddCors();
+
             services.AddScoped<IFileService, Services.FileService>();
             //services.AddMinIOStorage(sp => new MinIOConfig
             //{
@@ -70,6 +72,12 @@ namespace LE.FileService
             //app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(x => x
+               .AllowAnyMethod()
+               .AllowAnyHeader()
+               .SetIsOriginAllowed(origin => true) // allow any origin
+               .AllowCredentials()); // allow credentials
 
             app.UseConsul();
 
